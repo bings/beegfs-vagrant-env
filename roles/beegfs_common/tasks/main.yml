@@ -13,7 +13,14 @@
   selinux: state=disabled
 
 - name: "Packages"
-  yum: name="{{ item }}" state=present
+  yum: name="{{ item }}" state=latest
   with_items:
   - augeas
   - beegfs-utils
+  - ntp
+
+- name: "Ensure ntpd service is enabled and running"
+  service: name=ntpd enabled=yes state=started
+
+- name: "Enable ntpdate service is enabled and running"
+  service: name=ntpdate enabled=yes state=started
